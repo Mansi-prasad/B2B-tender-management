@@ -14,24 +14,24 @@ Sequelize CLI for migrations
 Zod for schema validation
 
 ## Features
-Company profile management- CRUD endpoints for company data
-Tender Management- - CRUD endpoints for tenders
-Application Workflow- Endpoint for companies to submit proposals against tenders
-Responsive design with Tailwind CSS
-Strong data validation using Zod 
-Database migrations with Sequelize    
-Secure authentication (JWT) - JWT‑based auth for API access
+Company profile management- CRUD endpoints for company data  
+Tender Management- CRUD endpoints for tenders  
+Application Workflow- Endpoint for companies to submit proposals against tenders  
+Responsive design with Tailwind CSS  
+Strong data validation using Zod  
+Database migrations with Sequelize     
+Secure authentication (JWT) - JWT‑based auth for API access  
 
 ## Project Setup
 ### 1. Clone the repo
-git clone https://github.com/Mansi-prasad/B2B-tender-management
+git clone https://github.com/Mansi-prasad/B2B-tender-management  
 cd B2B-tender-management
 
 ### 2.Install Dependencies
-npm install (for both frontend and backend)
+npm install (for both frontend and backend)  
 
 ### Environment Variables
-Create the .env.local and .env file and add the required variables
+Create the .env.local and .env file and add the required variables  
 
 ### Database Setup with Sequelize
 1. Create a PostgreSQL DB on Railway
@@ -40,12 +40,12 @@ npx sequelize-cli db:migrate
 
 ### Running the App Locally
 
-Start Backend(Express)
-cd backend
-npm run server
+Start Backend(Express)  
+cd backend  
+npm run server  
 
-Start Frontend(Next.js)
-cd frontend
-npm run dev
+Start Frontend(Next.js)  
+cd frontend  
+npm run dev  
 
 
