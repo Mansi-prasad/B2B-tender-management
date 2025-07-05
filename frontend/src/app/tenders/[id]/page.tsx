@@ -1,30 +1,60 @@
-// Import your API helper
+"use client"
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { api } from "@/lib/api";
 import ApplyButton from "./ApplyButton";
+type Tender = {
+  id: string;
+  title: string;
+  description: string;
+  deadline: string;
+  budget: number;
+  companyId: string;
+};
 
-export default async function TenderDetailPage({ params }: { params: { id: string } }) {
-  let tender = null;
-  let company = null;
+type Company = {
+  id: string;
+  name: string;
+};
 
-  try {
-    const { data } = await api.get(`/tenders/${params.id}`);
-    tender = data;
-  } catch (error) {
-    console.error("Error fetching tender:", error);
+export default function TenderDetailPage() {
+  const params = useParams();
+  const id = params?.id as string;
+
+  const [tender, setTender] = useState<Tender | null>(null);
+  const [company, setCompany] = useState<Company | null>(null);
+  const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+    const fetchTender = async () => {
+      try {
+        const { data: tenderData } = await api.get(`/tenders/${id}`);
+        setTender(tenderData);
+
+        const { data: companyData } = await api.get(`/company/${tenderData.companyId}`);
+        setCompany(companyData);
+      } catch (error) {
+        console.error("Error loading tender or company:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) fetchTender();
+  }, [id]);
+
+
+   if (loading) {
+    return <div className="text-center mt-8">Loading...</div>;
+  }
+
+  if (!tender) {
     return (
       <div className="max-w-3xl mx-auto mt-8 p-6 bg-white border rounded shadow">
         <h1 className="text-xl font-bold">Tender Not Found</h1>
       </div>
     );
   }
-
-  try {
-    const { data } = await api.get(`/company/${tender.companyId}`);
-    company = data;
-  } catch (error) {
-    console.error("Error fetching company:", error);
-  }
-
   return (
     <div className="max-w-3xl mx-auto mt-8 p-6 bg-white border rounded shadow">
       <h1 className="text-2xl font-bold mb-4">{tender.title}</h1>

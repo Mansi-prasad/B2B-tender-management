@@ -4,8 +4,9 @@ import { api } from "@/lib/api";
 import CompanyCard from "@/components/CompanyCard";
 import axios from "axios";
 import Link from "next/link";
+import type { Company } from "@/types/company";
 export default function CompaniesPage() {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
 const [loading, setLoading] = useState(false);

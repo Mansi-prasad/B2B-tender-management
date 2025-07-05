@@ -5,9 +5,16 @@ import { api } from "@/lib/api";
 import TenderCard from '@/components/TenderCard';
 import Link from "next/link";
 
-
+type Tender = {
+  id: string;
+  title: string;
+  description: string;
+  deadline: string;
+  budget: number;
+  companyId: string;
+};
 export default function TendersPage() {
-  const [tenders, setTenders] = useState([]);
+  const [tenders, setTenders] = useState<Tender[]>([]);
 
   useEffect(() => {
     const fetchTenders = async () => {

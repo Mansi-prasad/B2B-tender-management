@@ -1,9 +1,4 @@
-type Company = {
-  id: string;
-  name: string;
-  description: string;
-  logoUrl?: string;
-};
+import type { Company } from "@/types/company";
 
 export default function CompanyCard({ company }: { company: Company }) {
   return (

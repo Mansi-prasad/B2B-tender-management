@@ -1,3 +1,6 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { api } from "@/lib/api";
 
 type Company = {
@@ -12,20 +15,35 @@ type Company = {
   images: string | null;
 };
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
+export default function CompanyDetailPage() {
+  const params = useParams();
+  const { id } = params as { id: string };
+  const [company, setCompany] = useState<Company | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function CompanyDetailPage({ params }: Props) {
-  // Fetch the company detail
-  const { data: company } = await api.get<Company>(`/company/${params.id}`);
+  useEffect(() => {
+    const fetchCompany = async () => {
+      try {
+        const { data } = await api.get<Company>(`/company/${id}`);
+        setCompany(data);
+      } catch (err) {
+        console.error("Error fetching company:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Convert images string to array if needed
-  const imageUrls = company.images
-    ? company.images.split(",").map((url: string) => url.trim())
-    : [];
+    fetchCompany();
+  }, [id]);
+
+  if (!company) {
+  return <div>Company not found.</div>;
+}
+if (loading) {
+  return <div>Loading Company...</div>;
+}
+ const imageUrls =
+    company.images?.split(",").map((url) => url.trim()) || [];
 
   return (
     <div className="max-w-3xl mx-auto mt-10 px-4">
