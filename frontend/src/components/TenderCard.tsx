@@ -2,6 +2,8 @@ type Tender = {
   id: string;
   title: string;
   description: string;
+   deadline: string;
+  budget: number;
 };
 
 export default function TenderCard({ tender }: { tender: Tender }) {
@@ -18,8 +20,3 @@ export default function TenderCard({ tender }: { tender: Tender }) {
     </div>
   );
 }
-
-{/* <div className="border p-4 rounded shadow-md bg-white" key={tender.id}>
-      <h2 className="text-xl font-semibold">{tender.title}</h2>
-      <p>{tender.description}</p>
-    </div> */}

@@ -2,12 +2,14 @@ const { Company } = require("../models");
 const { Op } = require("sequelize");
 
 // Search companies by name or industry only
-exports.searchCompanies = async (req, res, next) => {
+exports.searchCompanies = async (req, res) => {
   try {
     const { query } = req.query;
 
     if (!query || query.trim() === "") {
-      return res.status(400).json({ message: "Search Query parameter is required" });
+      return res
+        .status(400)
+        .json({ message: "Search Query parameter is required" });
     }
 
     const companies = await Company.findAll({
@@ -22,6 +24,6 @@ exports.searchCompanies = async (req, res, next) => {
 
     res.json(companies);
   } catch (err) {
-    next(err);
+    console.log("ERROR! to search companies", err.message);
   }
 };

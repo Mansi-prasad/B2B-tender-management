@@ -50,8 +50,6 @@ export default function CreateTenderPage() {
         router.push("/auth/login");
         return;
       }
-
-      // You can use your `api` instance (from "@/lib/api") to avoid repeating axios config
       await api.post(
         "/tenders",
         {

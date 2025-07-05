@@ -108,7 +108,7 @@ exports.loginCompany = async (req, res) => {
 
 // Get the logged-in company's details
 
-exports.getLoggedInCompany = async (req, res, next) => {
+exports.getLoggedInCompany = async (req, res) => {
   try {
     const companyId = req.company.companyId; // From auth middleware
     const company = await Company.findByPk(companyId, {
@@ -128,14 +128,13 @@ exports.getLoggedInCompany = async (req, res, next) => {
 
 // Get all companies
 
-exports.getCompanies = async (req, res, next) => {
+exports.getCompanies = async (req, res) => {
   try {
     const companies = await Company.findAll();
     res.status(200).json(companies);
   } catch (err) {
     console.log("ERROR! to get companies: ", err);
     res.status(500).json({ message: err.message });
-    next(err);
   }
 };
 
@@ -190,7 +189,7 @@ exports.updateCompany = async (req, res) => {
 };
 
 // Delete a company
-exports.deleteCompany = async (req, res, next) => {
+exports.deleteCompany = async (req, res) => {
   try {
     const company = await Company.findByPk(req.params.id);
     if (!company) {
@@ -201,13 +200,12 @@ exports.deleteCompany = async (req, res, next) => {
 
     res.json({ message: "Company deleted successfully!" });
   } catch (err) {
-    next(err);
   }
 };
 
 // Upload logo
 // Expects: { fileName, mimeType, fileBase64 }
-exports.uploadLogo = async (req, res, next) => {
+exports.uploadLogo = async (req, res) => {
   try {
     const company = await Company.findByPk(req.params.id);
     if (!company) {
@@ -243,15 +241,13 @@ exports.uploadLogo = async (req, res, next) => {
         errors: err.errors,
       });
     }
-    next(err);
   }
 };
 
-/**
- * Upload image
- * Expects: { fileName, mimeType, fileBase64 }
- */
-exports.uploadImage = async (req, res, next) => {
+
+//  Upload image
+//  Expects: { fileName, mimeType, fileBase64 }
+exports.uploadImage = async (req, res) => {
   try {
     const company = await Company.findByPk(req.params.id);
     if (!company) {
@@ -287,6 +283,5 @@ exports.uploadImage = async (req, res, next) => {
         errors: err.errors,
       });
     }
-    next(err);
   }
 };

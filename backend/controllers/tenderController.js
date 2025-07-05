@@ -5,36 +5,6 @@ const {
 } = require("../validators/zodSchemas");
 
 // Create tender
-// exports.createTender = async (req, res) => {
-//   try {
-//     const validated = createTenderSchema.parse(req.body);
-
-//     const company = await Company.findByPk(validated.companyId);
-//     if (!company) {
-//       return res.status(404).json({ message: "Company not found" });
-//     }
-
-//     const tender = await Tender.create(validated);
-//     res.status(201).json(tender);
-//   } catch (error) {
-//     // Zod validation errors
-//     if (error.name === "ZodError") {
-//       const errorMsg = error.errors[0];
-//       return res.status(400).json({
-//         message: `${errorMsg.field || errorMsg.path[0]}: ${errorMsg.message}`,
-//       });
-//     }
-
-//     // Sequelize unique constraint errors
-//     if (error.name === "SequelizeUniqueConstraintError") {
-//       return res.status(400).json({
-//         message: error.errors[0].message,
-//       });
-//     }
-//     res.status(500).json({ message: "Server error during creating tender." });
-//   }
-// };
-
 exports.createTender = async (req, res) => {
   try {
     const validated = createTenderSchema.parse(req.body);
@@ -90,7 +60,7 @@ exports.getAllTenders = async (req, res) => {
 };
 
 // Get tender by ID
-exports.getTender = async (req, res, next) => {
+exports.getTender = async (req, res) => {
   try {
     const tender = await Tender.findByPk(req.params.id);
     if (!tender) {
@@ -103,34 +73,6 @@ exports.getTender = async (req, res, next) => {
   }
 };
 
-// Update tender
-// exports.updateTender = async (req, res) => {
-//   try {
-//     const validated = updateTenderSchema.parse(req.body);
-
-//     const tender = await Tender.findByPk(req.params.id);
-//     if (!tender) {
-//       return res.status(404).json({ message: "Tender not found" });
-//     }
-
-//     await tender.update(validated);
-//     res.json({ message: "Tender updated successfully.", tender });
-//   } catch (err) {
-//     if (err.name === "ZodError") {
-//       return res
-//         .status(400)
-//         .json({ message: "Validation failed", errors: err.errors });
-//     }
-//     // Sequelize unique constraint errors
-//     if (err.name === "SequelizeUniqueConstraintError") {
-//       return res.status(400).json({
-//         message: err.errors[0].message,
-//       });
-//     }
-//     console.error(err);
-//     res.status(500).json({ message: "Server error updating tender." });
-//   }
-// };
 
 // Update tender
 exports.updateTender = async (req, res) => {

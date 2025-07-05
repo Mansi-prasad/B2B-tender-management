@@ -1,7 +1,7 @@
 const { Application, Company, Tender, User } = require("../models");
 const { createApplicationSchema } = require("../validators/zodSchemas");
 
-exports.submitApplication = async (req, res, next) => {
+exports.submitApplication = async (req, res) => {
   try {
     const { tenderId, proposalText } = createApplicationSchema.parse(req.body);
 
@@ -47,12 +47,11 @@ exports.submitApplication = async (req, res, next) => {
         errors: err.errors,
       });
     }
-    next(err);
   }
 };
 
 // Get all applications for a tender
-exports.getTenderApplications = async (req, res, next) => {
+exports.getTenderApplications = async (req, res) => {
   try {
     const tender = await Tender.findByPk(req.params.tenderId);
     if (!tender) {
@@ -73,12 +72,11 @@ exports.getTenderApplications = async (req, res, next) => {
     res.json(applications);
   } catch (err) {
     console.error("Get applications error:", err);
-    next(err);
   }
 };
 
 // delete application
-exports.deleteApplication = async (req, res, next) => {
+exports.deleteApplication = async (req, res) => {
   try {
     const applicationId = req.params.id;
 
@@ -94,6 +92,5 @@ exports.deleteApplication = async (req, res, next) => {
     res.json({ message: "Application deleted successfully." });
   } catch (err) {
     console.error("Delete application error:", err);
-    next(err);
   }
 };
