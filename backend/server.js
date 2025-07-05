@@ -7,12 +7,7 @@ const searchRoute = require("./routes/searchRoutes");
 dotenv.config();
 const cors = require("cors");
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
+app.use(cors());
 require("dotenv").config();
 app.use(express.json());
 
