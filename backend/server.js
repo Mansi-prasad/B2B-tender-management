@@ -14,6 +14,7 @@ app.use(
     credentials: true,
   })
 );
+require("dotenv").config();
 app.use(express.json());
 
 // Routes
