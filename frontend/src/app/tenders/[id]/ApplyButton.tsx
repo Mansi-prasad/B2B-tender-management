@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
 interface ApplyButtonProps {
   tenderId: string;
   companyId: string; // you might also get this from user context instead

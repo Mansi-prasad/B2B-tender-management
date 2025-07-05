@@ -69,18 +69,7 @@ const handleUpdate = async (e: React.FormEvent) => {
     router.push(`/dashboard/tenders/${id}`);
   } catch (err) {
     console.error("Update error:", err);
-    if (axios.isAxiosError(err)) {
-      const res = err.response?.data;
-      if (res?.errors?.length) {
-        res.errors.forEach((e: any) => toast.error(`${e.field}: ${e.message}`));
-      } else if (res?.message) {
-        toast.error(res.message);
-      } else {
-        toast.error("Something went wrong.");
-      }
-    } else {
-      toast.error("Unexpected error occurred.");
-    }
+   toast.error("Something went wrong. Please try again.");
   }
 };
 
