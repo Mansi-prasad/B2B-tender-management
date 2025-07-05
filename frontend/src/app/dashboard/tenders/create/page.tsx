@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { api } from "@/lib/api";
-
+import { AxiosError } from "axios";
 interface TenderInput {
   title: string;
   description: string;
@@ -67,13 +67,13 @@ export default function CreateTenderPage() {
 
       toast.success("Tender created successfully!");
       router.push("/dashboard/tenders");
-    } catch (error: any) {
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Unexpected error while creating tender.");
-      }
-    } finally {
+    } catch (error: unknown) {
+  if (error instanceof AxiosError && error.response?.data?.message) {
+    toast.error(error.response.data.message);
+  } else {
+    toast.error("Unexpected error while creating tender.");
+  }
+} finally {
       setLoading(false);
     }
   };

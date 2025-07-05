@@ -1,5 +1,16 @@
 import { api } from "@/lib/api";
-import Image from "next/image";
+
+type Company = {
+  id: string;
+  name: string;
+  description: string;
+  industry: string;
+  address: string;
+  email: string;
+  phone: string;
+  logoUrl: string | null;
+  images: string | null;
+};
 
 type Props = {
   params: {
@@ -9,7 +20,7 @@ type Props = {
 
 export default async function CompanyDetailPage({ params }: Props) {
   // Fetch the company detail
-  const { data: company } = await api.get(`/company/${params.id}`);
+  const { data: company } = await api.get<Company>(`/company/${params.id}`);
 
   // Convert images string to array if needed
   const imageUrls = company.images

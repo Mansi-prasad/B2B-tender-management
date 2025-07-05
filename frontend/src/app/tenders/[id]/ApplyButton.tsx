@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { AxiosError } from "axios";
 interface ApplyButtonProps {
   tenderId: string;
   companyId: string; // you might also get this from user context instead
@@ -35,7 +35,7 @@ export default function ApplyButton({ tenderId, companyId }: ApplyButtonProps) {
     }
 
     await axios.post(
-      "http://localhost:5000/api/applications",
+      `${process.env.NEXT_PUBLIC_API_URL}` + "/api/applications",
       {
         tenderId,
         companyId,
@@ -51,19 +51,23 @@ export default function ApplyButton({ tenderId, companyId }: ApplyButtonProps) {
 
     toast.success("Application submitted successfully!");
     router.push("/applications");
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (axios.isAxiosError(err)) {
     console.error("Error submitting application:", err);
 
-    // Check if it's a 401 from the backend
-    if (err?.response?.status === 401) {
+    if (err.response?.status === 401) {
       toast.error("Please login first.");
       router.push("/auth/login");
     } else {
       toast.error(
-        err?.response?.data?.message || "Something went wrong. Try again."
+        err.response?.data?.message || "Something went wrong. Try again."
       );
     }
-  } finally {
+  } else {
+    console.error("Unexpected error:", err);
+    toast.error("Something went wrong. Try again.");
+  }
+} finally {
     setIsLoading(false);
   }
 };

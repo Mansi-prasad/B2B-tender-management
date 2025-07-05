@@ -62,7 +62,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           className="w-full border p-2 rounded"
-          placeholder="Company's Email"
+          placeholder="Company Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -74,7 +74,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <div className="text-sm">
-          <span>Haven't created a company yet? </span>
+          <span>Have&apos;t created a company yet? </span>
           <Link href="/auth/register" className="text-blue-700">
             Register here
           </Link>

@@ -2,12 +2,19 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 
+type CompanyProfile = {
+  id: string;
+  name: string;
+  description: string;
+  industry: string;
+  logoUrl: string;
+};
 export default function ProfilePage() {
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<CompanyProfile | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const { data } = await api.get("/companies/me");
+       const { data } = await api.get<CompanyProfile>("/companies/me");
       setProfile(data);
     };
     fetchProfile();
